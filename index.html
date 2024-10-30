@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - cardápio</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio Online</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #52966d;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #52966d;
+            font-size: 1.5em;
+            margin: 20px 0;
+        }
+        .menu-category {
+            margin: 15px;
+            padding: 15px;
+            border: 1px solid #609e7c;
+            border-radius: 10px;
+        }
+        .item {
+            margin: 10px 0;
+            color: #609e7c;
+        }
+        .item label {
+            font-size: 1em;
+        }
+        .item select, .item input {
+            width: 100%;
+            padding: 8px;
+            font-size: 1em;
+            margin-top: 5px;
+            border: 1px solid #FFD700;
+            border-radius: 5px;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .add-button, .whatsapp-button {
+            width: 90%;
+            max-width: 300px;
+            padding: 10px;
+            margin: 10px auto;
+            background-color: #609e7c;
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            display: block;
+        }
+        .whatsapp-button {
+            background-color: #25D366;
+            color: #fff;
+        }
+        .whatsapp-button:hover {
+            background-color: #20c155;
+        }
+        .order-list {
+            margin: 10px;
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Cardápio</h1>
+
+    <div class="menu-category">
+        <h2>Empadas</h2>
+
+        <div class="item">
+            <label for="size">Tamanho:</label>
+            <select id="size">
+                <option value="Pequena - 220ml" data-price="7.00">Pequena - 220ml (R$7,00)</option>
+                <option value="Média - 500ml" data-price="18.00">Média - 500ml (R$18,00)</option>
+                <option value="Grande - 1kg" data-price="30.00">Grande - 1kg (R$30,00)</option>
+            </select>
+        </div>
+
+        <div class="item">
+            <label for="flavor">Recheio:</label>
+            <select id="flavor">
+                <option value="Frango">Frango</option>
+                <option value="Frango com Catupiry">Frango com Catupiry</option>
+            </select>
+        </div>
+
+        <div class="item">
+            <label for="quantity">Quantidade:</label>
+            <input type="number" id="quantity" min="1" max="10" value="1">
+        </div>
+
+        <button class="add-button" onclick="addToOrder()">Adicionar ao Pedido</button>
+    </div>
+
+    <h3>Pedido:</h3>
+    <div class="order-list" id="orderList"></div>
+
+    <button class="whatsapp-button" onclick="sendWhatsAppMessage()">Finalizar Pedido no WhatsApp</button>
+
+    <script>
+        let order = [];
+
+        function addToOrder() {
+            const sizeSelect = document.getElementById("size");
+            const size = sizeSelect.value;
+            const pricePerItem = parseFloat(sizeSelect.options[sizeSelect.selectedIndex].dataset.price);
+            const flavor = document.getElementById("flavor").value;
+            const quantity = parseInt(document.getElementById("quantity").value);
+            const totalPrice = (pricePerItem * quantity).toFixed(2);
+
+            order.push(`${quantity} empada(s) de tamanho ${size} com recheio de ${flavor} - Total: R$${totalPrice}`);
+            displayOrder();
+        }
+
+        function displayOrder() {
+            const orderList = document.getElementById("orderList");
+            orderList.innerHTML = order.map(item => `<p>${item}</p>`).join('');
+        }
+
+        function sendWhatsAppMessage() {
+            const message = `Olá, gostaria de fazer o seguinte pedido:\n\n${order.join('\n')}`;
+            const whatsappUrl = `https://wa.me/5517996390812?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+
+</body>
+</html>
+<!-- partial -->
+  
+</body>
+</html>
